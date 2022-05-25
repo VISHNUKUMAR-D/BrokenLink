@@ -38,10 +38,12 @@ public class BrokenLink {
            httpConnection.connect();
            int responseCode = httpConnection.getResponseCode();
            if(responseCode>=400){
-               System.out.println(_url+" - "+"IS A BROKEN LINK WITH RESPONSE CODE "+responseCode);
+               System.err.println(_url+" - IS "+httpConnection.getResponseMessage()+" WITH RESPONSE CODE : "+responseCode);
            }else{
-               System.out.println(_url+" - "+"IS A VALID LINK WITH RESPONSE CODE "+responseCode);
+               System.out.println(_url+" - "+"IS "+httpConnection.getResponseMessage()+" WITH RESPONSE CODE : "+responseCode);
+              
            }
+           httpConnection.disconnect();
         }
     }
     
