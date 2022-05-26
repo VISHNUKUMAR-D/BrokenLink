@@ -1,4 +1,8 @@
 
+
+// Neccessary packages
+
+
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,36 +21,52 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class TraceWebsite {
+    
+    //Reference for the WebDriver 
     public  WebDriver driver;
+    
+    
+    //Contructor for the class TraceWebsite that gets the URL as string parameter when instance for this class is created
     TraceWebsite(String URL){
+        
+        //Locates the ChromeDriver in the System
         System.setProperty("webdriver.chrome.driver", "C:\\Driver\\chromedriver.exe");
-            this.driver = new ChromeDriver();
-            this.driver.manage().window().maximize();
-            this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            this.driver.get(URL);
+        this.driver = new ChromeDriver();
+        
+        //Maximizes the window
+        this.driver.manage().window().maximize();
+        this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        
+        //Opens the website
+        this.driver.get(URL);
     }
     
+    
+    //Method to trace the links in the website and stores the information about the links in an array of type Table and returns the (Table)array
     public  Table[] checkBrokenLinks(String tag, String attribute) throws InterruptedException,IOException, MalformedURLException{
+        
+        //List of type WebElement contains all the Elements with given TagName
         List<WebElement> links = driver.findElements(By.tagName(tag));
-        List<WebElement> activeLinks = new ArrayList<>();     
-        //This prints the total number of LINKS available in the website given
-        //System.out.println("\n\nTotal Number of Links with tag '"+tag+"' : "+links.size()+"\n\n");
-        //System.out.println();
-        //Filter only active Links which means the tag should contain the link it should not be empty
+        
+        //Array List to store all activeLinks
+        List<WebElement> activeLinks = new ArrayList<>();    
+        
+        //This will get all the active Links
          for(int i=0; i<links.size(); i++){
             if(!links.get(i).getAttribute(attribute).isEmpty()){
                 activeLinks.add(links.get(i));
             }
          }
+         
+        //A Table array is created with the size of active links
         Table[] t = new Table[activeLinks.size()];
         
-        //System.out.println("Total Number of Active Links with tag '"+tag+"' : "+activeLinks.size()+"\n\n");
-        for(int i=0; i<activeLinks.size(); i++){
+        
+        //This will iterate the active links one by one
+        for(int i=0; i<activeLinks.size(); i++){    
             
-           //Getting the links from the WebElements
-           String _url = activeLinks.get(i).getAttribute(attribute);
-           
-           //Passing it as arguements to the class URL
+           //Gets the link as string using getAttribute method
+           String _url = activeLinks.get(i).getAttribute(attribute);         
            URL link = new URL(_url);
            
            //HttpURLConnection is a abstract class for which object cannot be created
@@ -66,22 +86,29 @@ public class TraceWebsite {
            //Gets the ResponseCode for the httpConnection
            int responseCode = httpConnection.getResponseCode();
            
+           
+           //Each element of Table array is assinged with the Table object
             t[i] = new Table();
-           // If the responseCode is equal to 200 then it is a good link when responseCode is greater than 400 than it is broken or bad link
+            
+            //Each element gets its respective data about the link
             t[i].AttributeName=attribute;
             t[i].TagName = tag;
             t[i].ResponseCode = responseCode;
             t[i].ResponseMessage = httpConnection.getResponseMessage();
             t[i].URL = _url;
+            
+           // If the responseCode is equal to 200 then it is a good link when responseCode is greater than 400 than it is broken or bad link
            if(responseCode>=400){
-                t[i].ErrorMessage = "Error";
+                t[i].ErrorMessage = "Broken Link";
            }else{
-                t[i].ErrorMessage = "Good";
+                t[i].ErrorMessage = "Good Link";
            }
            
            //This disconnects the connected httpConnection
            httpConnection.disconnect();
         }
+        
+        //Returns the Table array 
         return t;
     }
     
