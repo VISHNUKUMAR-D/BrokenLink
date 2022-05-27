@@ -67,7 +67,7 @@ public class DatabaseServlet extends HttpServlet {
             //Finally using RequestDispatcher connection and domain name sent to another BrokenLinkServlet
             request.setAttribute("Connection", connection);
             request.setAttribute("Domain",Domain);
-            RequestDispatcher dispatch = request.getRequestDispatcher("BrokenLinkServlet");
+            RequestDispatcher dispatch = request.getRequestDispatcher("ResultTableServlet");
             dispatch.forward(request, response);
         }
         

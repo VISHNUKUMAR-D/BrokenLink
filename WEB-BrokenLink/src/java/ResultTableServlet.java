@@ -20,7 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class BrokenLinkServlet extends HttpServlet {
+public class ResultTableServlet extends HttpServlet {
     
     //doPost methos used to post the content in the client side
     @Override
@@ -57,7 +57,7 @@ public class BrokenLinkServlet extends HttpServlet {
             out.println("</html>");
         
         } catch (Exception ex) {
-            Logger.getLogger(BrokenLinkServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultTableServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
 
