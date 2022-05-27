@@ -16,6 +16,9 @@ import jakarta.servlet.ServletException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class BrokenLinkServlet extends HttpServlet {
     
@@ -23,11 +26,12 @@ public class BrokenLinkServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MalformedURLException {
-        
+        Connection connection = (Connection) request.getAttribute("Connection");
+        String Domain =(String) request.getAttribute("Domain");
         try(PrintWriter out = response.getWriter()){
-            
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM "+Domain);
+            ResultSet set = statement.executeQuery();
             //Create instance for TraceWebsite and pass the URL as a Constructor's parameter
-            TraceWebsite Trace = new TraceWebsite(request.getParameter("URL"));
             response.setContentType("text/html");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -36,15 +40,19 @@ public class BrokenLinkServlet extends HttpServlet {
             out.println("<link rel= 'stylesheet' href='Bootstrap/css/bootstrap.css'>");
             out.println("<link rel= 'stylesheet' href='Bootstrap/css/bootstrap.min.css'>");
             out.println("<link rel= 'stylesheet' href='Bootstrap/js/bootstrap.min.js'>");
-//            out.println("<link rel= 'stylesheet' href='Bootstrap/css/bootstrap.min.css'>");
-
             out.println("</head>");
             out.println("<body>");
             out.println("<br><div class='container'><div class='card'><div class='card-header' style='text-align:center'><h3>Result of Links in the Website</h3></div></div></div><br>");
-            _TraceWebite("a","href",Trace, response);
-            _TraceWebite("img","src",Trace, response);
-            _TraceWebite("script","src",Trace, response);
-            _TraceWebite("link","href",Trace, response);
+            out.println("<div class='container'><div class='card'><br><table class='table-responsive'><thead class='thead-dark'><tr><th>S.no</th><th>TAGE NAME</th><th>ATTRIBUTE NAME</th><th width='250px'>URL</th><th>RESPONSE MESSAGE</th><th>RESPONSE CODE</th><th>ABOUT LINK</th><th>REMARKS</th></tr></thead><tbody>");
+            int i=0;
+            while(set.next()){
+                if(set.getInt("code")==200)
+                    out.println("<tr class='success'><td>"+(++i)+"</td><td>"+set.getString("TAG")+"</td><td>"+set.getString("ATTRIBUTE")+"</td><td width='250px'><a href='"+set.getString("URL")+"' class="+"link-primary"+">"+set.getString("URL")+"</a></td><td>"+set.getString("MESSAGE")+"</td><td>"+set.getString("CODE")+"</td><td>"+set.getString("ABOUT")+"</td><td>"+set.getString("REMARKS")+"</td></tr>");
+                else
+                    out.println("<tr class='danger'><td>"+(++i)+"</td><td>"+set.getString("TAG")+"</td><td>"+set.getString("ATTRIBUTE")+"<td width='250px'>"+set.getString("URL")+"</td><td>"+set.getString("MESSAGE")+"</td><td>"+set.getString("CODE")+"</td><td>"+set.getString("ABOUT")+"</td><td>"+set.getString("REMARKS")+"</td></tr>");
+
+            }
+        out.println("</tbody></table></div></div><br><br>");
             out.println("</body>");
             out.println("</html>");
         
@@ -55,28 +63,4 @@ public class BrokenLinkServlet extends HttpServlet {
 
         
     }
-    
-    //This method calls the checkBrokenLinks method of TraceWebsite using its instance and prints its content in a table 
-    public void _TraceWebite(String tag, String attribute,TraceWebsite Trace,HttpServletResponse response) throws InterruptedException, IOException{
-        
-        //Calls the checkBrokenLinks method in TraceWebsite and stores the return value in Table array
-        Table[] T = Trace.checkBrokenLinks(tag, attribute);  
-        
-        //PrintWriter used to write the content to the clinet side
-        PrintWriter out = response.getWriter();  
-        
-        //Prints the Table Array value in table 
-        out.println("<div class='container'><div class='card'><div class='card-header'><mark>Links under TagName '"+tag+"' with Attribute Name '"+attribute+"'</mark></div><br>"
-                + "<table class='table'><thead class='thead-dark'><tr><th>S.no</th><th>URL</th><th>RESPONSE MESSAGE</th><th>RESPONSE CODE</th><th>REMARKS</th></tr></thead><tbody>");
-        for(int i=0;i<T.length;i++){
-            if(T[i].ResponseCode==200)
-                out.println("<tr class='success'><td>"+(i+1)+"</td><td><a href='"+T[i].URL+"' class="+"link-primary"+">"+T[i].URL+"</a></td><td>"+T[i].ResponseMessage+"</td><td>"+T[i].ResponseCode+"</td><td>"+T[i].ErrorMessage+"</td></tr>");
-            else
-                out.println("<tr class='danger'><td>"+(i+1)+"</td><td>"+T[i].URL+"</td><td>"+T[i].ResponseMessage+"</td><td>"+T[i].ResponseCode+"</td><td>"+T[i].ErrorMessage+"</td></tr>");
-
-        }
-        out.println("</tbody></table></div></div><br><br>");
-
-    }
-
 }
