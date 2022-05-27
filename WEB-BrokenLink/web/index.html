@@ -3,12 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Broken Link</title>
+<link rel="stylesheet" href="Bootstrap/css/bootstrap.css">
 </head>
-<body>
-    <h2  style="text-align: center">FIND BROKEN LINK</h2><br>
-	<form action="BrokenLinkServlet" method="post" style="text-align: center">
-            <h3> Enter the URL for the website : <input type="text" name="URL" style="width: 250px"><br><br>
-                <input type="submit" value="Find" style="width: 100px"></h3>
-	</form>
+<body><br><br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                <h4>FIND BROKEN LINK</h4>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                <div class="form-group">
+                    <form action="BrokenLinkServlet" method="post" style="text-align: center">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">ENTER THE URL </label>
+                            </div>
+                            <input type="text" class="form-control" id="usr" name="URL">
+                            <div class="input-group-append">
+                              <button type="submit" class="btn btn-success"> CHECK </button>
+                            </div>
+                         </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 </body>
 </html>

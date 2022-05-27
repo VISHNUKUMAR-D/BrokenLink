@@ -98,7 +98,7 @@ public class TraceWebsite {
             t[i].URL = _url;
             
            // If the responseCode is equal to 200 then it is a good link when responseCode is greater than 400 than it is broken or bad link
-           if(responseCode>=400){
+           if(responseCode!=200){
                 t[i].ErrorMessage = "Broken Link";
            }else{
                 t[i].ErrorMessage = "Good Link";

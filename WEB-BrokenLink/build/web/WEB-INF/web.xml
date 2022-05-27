@@ -8,9 +8,12 @@
         <servlet-name>BrokenLinkServlet</servlet-name>
         <url-pattern>/BrokenLinkServlet</url-pattern>
     </servlet-mapping>
+
+
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+
 </web-app>
