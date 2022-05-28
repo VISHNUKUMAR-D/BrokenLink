@@ -4,10 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/web/WEB-INF/web.xml</file>
-            <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/src/java/BrokenLinkServlet.java</file>
             <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/src/java/TraceWebsite.java</file>
             <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/web/index.html</file>
             <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/src/java/DatabaseServlet.java</file>
+            <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/src/java/ResultTableServlet.java</file>
             <file>file:/D:/ZOHO/BrokenLink/WEB-BrokenLink/src/java/Table.java</file>
         </group>
     </open-files>

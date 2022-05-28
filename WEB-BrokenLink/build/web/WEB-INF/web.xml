@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>BrokenLinkServlet</servlet-name>
+        <servlet-name>ResultTableServlet</servlet-name>
         <servlet-class>ResultTableServlet</servlet-class>
     </servlet>
     <servlet>
@@ -9,8 +9,8 @@
         <servlet-class>DatabaseServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>BrokenLinkServlet</servlet-name>
-        <url-pattern>/BrokenLinkServlet</url-pattern>
+        <servlet-name>ResultTableServlet</servlet-name>
+        <url-pattern>/ResultTableServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DatabaseServlet</servlet-name>
