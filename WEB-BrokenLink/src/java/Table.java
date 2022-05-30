@@ -8,5 +8,5 @@ public class Table {
     public String URL;
     public String ResponseMessage;
     public int ResponseCode;
-    public String ErrorMessage;
+    public String AboutLink;
 }

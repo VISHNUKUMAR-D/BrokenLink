@@ -88,7 +88,7 @@ public class DatabaseServlet extends HttpServlet {
             statement.setString(3, T[i].URL);
             statement.setInt(4, T[i].ResponseCode);
             statement.setString(5, T[i].ResponseMessage);
-            statement.setString(6, T[i].ErrorMessage);
+            statement.setString(6, T[i].AboutLink);
             statement.setString(7, "New Link");
             statement.executeUpdate();
         }
@@ -114,7 +114,7 @@ public class DatabaseServlet extends HttpServlet {
                         statement = connection.prepareStatement("UPDATE "+Domain+" SET CODE= ? ,MESSAGE= ?  ,ABOUT= ? REMARKS = ? WHERE URL = ?");
                         statement.setInt(1,T[i].ResponseCode);
                         statement.setString(2,T[i].ResponseMessage);
-                        statement.setString(3,T[i].ErrorMessage);
+                        statement.setString(3,T[i].AboutLink);
                         statement.setString(4,"Resolved");
                         statement.setString(5,T[i].URL);
                         statement.executeUpdate();
@@ -124,7 +124,7 @@ public class DatabaseServlet extends HttpServlet {
                         statement = connection.prepareStatement("UPDATE "+Domain+" SET CODE= ? ,MESSAGE= ?  ,ABOUT= ? REMARKS = ? WHERE URL = ?");
                         statement.setInt(1,T[i].ResponseCode);
                         statement.setString(2,T[i].ResponseMessage);
-                        statement.setString(3,T[i].ErrorMessage);
+                        statement.setString(3,T[i].AboutLink);
                         statement.setString(4,"Newly Broken");
                         statement.setString(5,T[i].URL);
                         statement.executeUpdate();
@@ -147,7 +147,7 @@ public class DatabaseServlet extends HttpServlet {
                     statement.setString(3, T[i].URL);
                     statement.setInt(4, T[i].ResponseCode);
                     statement.setString(5, T[i].ResponseMessage);
-                    statement.setString(6, T[i].ErrorMessage);
+                    statement.setString(6, T[i].AboutLink);
                     statement.setString(7, "Newly Added");
                     statement.executeUpdate();
 
